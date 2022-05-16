@@ -22,8 +22,6 @@ services:
       - ./www/html/:/var/www/html
     networks:
       - backend
-    links:
-      - mariadb
   mariadb:
     image: mariadb:10.5.2
     environment:
