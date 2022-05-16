@@ -1,0 +1,50 @@
+version: "3"
+
+services:
+  nginx:
+    build: ./nginx/
+    container_name: nginx-container
+    ports:
+      - 6666:80
+    depends_on:
+      - php
+    volumes:
+      - ./www/html/:/var/www/html
+    networks:
+      - backend
+      - frontend
+  php:
+    image: php:7.0-fpm
+    container_name: php-container
+    expose:
+      - 9000
+    volumes:
+      - ./www/html/:/var/www/html
+    networks:
+      - backend
+    links:
+      - mariadb
+  mariadb:
+    image: mariadb:10.5.2
+    environment:
+        MYSQL_ROOT_PASSWORD: password
+        MYSQL_DATABASE: test
+        MYSQL_USER: test
+        MYSQL_PASSWORD: test
+    networks:
+      - backend
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: mariadb
+      MYSQL_ROOT_PASSWORD: password
+    depends_on:
+      - mariadb
+    ports:
+      - 6001:80
+    networks:
+      - backend
+
+networks:
+  frontend:
+  backend:
