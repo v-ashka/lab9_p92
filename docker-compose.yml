@@ -6,8 +6,6 @@ services:
     container_name: nginx-container
     ports:
       - 6666:80
-    depends_on:
-      - php
     volumes:
       - ./www/html/:/var/www/html
     networks:
@@ -22,22 +20,19 @@ services:
       - ./www/html/:/var/www/html
     networks:
       - backend
-  mariadb:
-    image: mariadb:10.5.2
+  mysql:
+    image: mysql:latest
     environment:
-        MYSQL_ROOT_PASSWORD: password
-        MYSQL_DATABASE: test
+        MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASS}
         MYSQL_USER: test
-        MYSQL_PASSWORD: test
+        MYSQL_PASSWORD: ${MYSQL_PASS}
     networks:
       - backend
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     environment:
-      PMA_HOST: mariadb
-      MYSQL_ROOT_PASSWORD: password
-    depends_on:
-      - mariadb
+      PMA_HOST: mysql
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASS}
     ports:
       - 6001:80
     networks:
