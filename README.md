@@ -159,7 +159,17 @@ Ze względu na to że podstawowy użytkownik nie ma uprawnień do utworzenia baz
 ![image](https://user-images.githubusercontent.com/47278535/168816753-f32d82d6-f455-48ee-b129-1bf7ffebae10.png)
 
 ### Generowanie reprezentacji graficznej docker compose
-Jednym ze sposób wygenerowania graficznej reprezentacji utworzonego docker compose, jest darmowe narzędzie `docker-compose-viz`, ([Link tutaj](https://github.com/pmsipilot)), to narzędzie pozwala na utworzenie pliku graficznego całej struktury docker compose'a
+Jednym ze sposób wygenerowania graficznej reprezentacji utworzonego docker compose, jest darmowe narzędzie `docker-compose-viz`, ([Link tutaj](https://github.com/pmsipilot)), to narzędzie pozwala na utworzenie pliku graficznego całej struktury docker compose'a.
+
+Do utworzenia struktury w graficznej reprezentacji użyto polecenia:
+```
+docker run --rm -it 
+    --name dcv 
+    -v ${PWD}:/input pmsipilot/docker-compose-viz render 
+    -m image docker-compose.yml 
+    --output-file=zad92.png 
+    --force
+```
 
 ![image](https://user-images.githubusercontent.com/47278535/168817780-db8387dc-4921-4f88-8271-ef600584ede5.png)
 
