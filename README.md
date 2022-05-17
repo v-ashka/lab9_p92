@@ -41,7 +41,13 @@ Została stworzona następująca struktura katalogów
 
 W pliku `nginx/default.conf` znajdują się ustawienia nginx'a, umożliwiające poprawne uruchomienie się pliku `index.php`
 
+
 Plik `Dockerfile`, zawiera instrukcje COPY, która kopiuje stworzoną konfigurację do kontenera nginxa, zaś w pliku `.env` znajdują się hasła niezbędne do zalogowania się do tworzonej bazy danych.
+
+![image](https://user-images.githubusercontent.com/47278535/168814559-bac3477a-87ae-446f-8cca-ccb68f9978da.png)
+
+![image](https://user-images.githubusercontent.com/47278535/168814580-9fc1a25f-b17b-457e-85ee-08955eaf2b71.png)
+
 
 Utworzony docker-compose wygląda następująco:
 
@@ -117,3 +123,45 @@ networks:
   backend:
 
 ```
+
+Do uruchomienia utworzonych w powyższym pliku kontenerów, użyto polecenia `docker compose up -d`
+![image](https://user-images.githubusercontent.com/47278535/168814793-0f7b1f6a-b122-45da-81fe-87a513f1c61f.png)
+
+Za pomocą polecenia `docker ps` można zauważyć że zostały uruchomione wszystkie kontenery zamieszczone w pliku docker compose
+![image](https://user-images.githubusercontent.com/47278535/168814903-97275624-a4a8-4fe4-a72b-a1415bb6080c.png)
+
+Dodatkowo utworzony docker compose zawiera dwie sieci, `frontend` oraz `backend`, które zostały utworzone, a za pomocą polecenia `docker network inspect` można dowiedzieć się na jakich adresach IP pracują utworzone konetnery
+
+> Sieć backend
+>![image](https://user-images.githubusercontent.com/47278535/168815153-b28a287b-1b29-4e36-9b05-cf35b33265fa.png)
+
+> Sieć frontend
+> ![image](https://user-images.githubusercontent.com/47278535/168815249-f8878828-39a0-492d-8803-cf94100ca6f7.png)
+
+Jednym z założeń laboratorium było wyświetlenie strony index.php która posiadała informacje o wersji php, co przedstawia poniższy zrzut
+
+> poprawne działanie serwera nginx+php
+> ![image](https://user-images.githubusercontent.com/47278535/168815689-c4018d32-7f85-4fe5-a992-05fa94663c8d.png)
+
+Jako że serwer nginx'a jest ustawiony na 2 sieci frontend i backend, jest możliwość połączenia się z dwóch adresów IP do powyższej strony.
+
+Kolejnym punktem było poprawne uruchomienie się phpmyadmin, wraz z możliwością zalogowania się do bazy, poniższe zrzuty prezentują wykonanie tegoż punktu
+
+> poprawne połączenie się z phpmyadmin
+>  ![image](https://user-images.githubusercontent.com/47278535/168816264-a7286738-b1fc-45e1-b540-d8fb8f412f37.png)
+
+> poprawne zalogowanie się do bazy danych
+> ![image](https://user-images.githubusercontent.com/47278535/168816370-146a8605-5f80-4984-8368-6f566a5fe5ae.png)
+> brak uprawnień dla użytkownika test, do tworzenia bazy danych
+> ![image](https://user-images.githubusercontent.com/47278535/168816944-f82f036b-bd7d-419f-b501-5c0373bb4379.png)
+
+Ze względu na to że podstawowy użytkownik nie ma uprawnień do utworzenia bazy, tworzenie zostało zaprezentowane na użytkowniku root, który jest adminem
+![image](https://user-images.githubusercontent.com/47278535/168816753-f32d82d6-f455-48ee-b129-1bf7ffebae10.png)
+
+### Generowanie reprezentacji graficznej docker compose
+Jednym ze sposób wygenerowania graficznej reprezentacji utworzonego docker compose, jest darmowe narzędzie `docker-compose-viz`, ([Link tutaj](https://github.com/pmsipilot)), to narzędzie pozwala na utworzenie pliku graficznego całej struktury docker compose'a
+
+![image](https://user-images.githubusercontent.com/47278535/168817780-db8387dc-4921-4f88-8271-ef600584ede5.png)
+
+
+
